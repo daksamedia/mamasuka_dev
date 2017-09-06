@@ -335,7 +335,7 @@ $(document).ready(function()
 
 	}else{
 		//window.location = "home.html";
-		$(".main-menu .menu-gam").hide();
+		//$(".main-menu .menu-gam").hide();
 		$(".main-menu .menu-set").hide();
 		$(".current-user").hide();
 		$(".logout").hide();
@@ -351,7 +351,7 @@ $(document).ready(function()
 			$(".greetings").html("Welcome to offical H&auml;agen-Dazs Indonesia Mobile Apps<br>")
 		}
 		$("nav .col-xs-6:first-child").next(".col-xs-6").hide();
-		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=login'><button style='font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:10px 0;'>Login</button></a></div>");
+		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=login'><button style='font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:30px 0 10px;'>Login</button></a></div>");
 		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=signup'><button style='font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:5px 0;'>Register</button></a></div>");
 		
 	}

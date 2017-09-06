@@ -21,10 +21,11 @@ $('document').ready(function()
 			},
 			cpassword: {
 			required: true,
-			equalTo: '#password'
+			equalTo: '.pass_field #password'
 			},
 			email: {
             required: true,
+			email: true
             }
 	   },
        messages:
@@ -40,11 +41,9 @@ $('document').ready(function()
 						required: "please retype your password",
 						equalTo: "password doesn't match !"
 					  }
-			//sex:"please choose your gender",
-			//phone:"please enter your valid phone number",
-			//birthday:"please enter your birthday date",
+			
        }
-	   //submitHandler: submitForm	
+			//submitHandler: submitForm	
        });  
 	   /* validation */
 	   
@@ -57,19 +56,19 @@ $('document').ready(function()
 				var username = $("input[name='username']").val();
 				var password = $(".pass_field input[name='password']").val();
 				var user_email = $(".user_email").val();
-				//var gender = $("select[name='sex']").val();
+				var gender = $("select[name='sex']").val();
 				var login_type = $("input[name='login_type']").val();
-				//var default_phone = $(".miniform input[name='default_phone']").val();
-				//var birthday = $(".miniform input[name='birthday']").val();
+				var default_phone = $(".miniform input[name='default_phone']").val();
+				var birthday = $(".miniform input[name='birthday']").val();
 
 				var data = {
 					full_name : full_name,
 					username : username,
 					email : user_email,
 					password : password,
-					//gender : gender,
-					//default_phone : default_phone,
-					//birthday : birthday,
+					gender : gender,
+					default_phone : default_phone,
+					birthday : birthday,
 					login_type : login_type
 				}
 
@@ -88,16 +87,22 @@ $('document').ready(function()
 				success :  function(response)
 						   {
 						   		var respon = jQuery.parseJSON(response);		
+						   			
 								if(respon.is_error===false){
 									$(".loads").html('You have been successfully registered...');
 									location.reload();
 																
 								}else{
-										
-									$(".loads").html('<div class="alert alert-danger"><span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+ respon.status_msg +' !</div>');
+									
+									if(respon.payload.validation_errors.full_name!=undefined){
+										$(".loads").html('<div class="alert alert-danger"><span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+ respon.payload.validation_errors.full_name +'</div>');
+									}else{
+										$(".loads").html('<div class="alert alert-danger"><span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+ respon.payload.validation_errors.email +'</div>');
+									}
+									
 									setTimeout(function () {
 
-										$(".alert-danger").hide();
+										$(".alert-danger").fadeOut();
 
 									},4000)
 									$(".regisform").fadeIn();

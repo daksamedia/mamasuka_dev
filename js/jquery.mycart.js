@@ -570,8 +570,7 @@
 
     $("." + classCheckoutCart).click(function(){
       var products = ProductManager.getAllProducts();
-	  if(localStorage.hd_session_key==""){
-		   //window.location.href="index.html";
+	  if(localStorage.hd_session_key=="" || localStorage.hd_session_key==undefined){
 		   $("#info").modal("show")
 	  }else{
 		  window.location.href="checkout.html"; 

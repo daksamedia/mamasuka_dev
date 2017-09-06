@@ -102,7 +102,7 @@
 							</div>
 							<div class="clearfix"></div>
 							<P>How lucky are You? Get some surprises and lucky of you by spin the wheel!</P>
-							<a href="roullete2.html"><button style="background: #E3B75B; color: black; border: none; padding: 4px; width: 100%;">Play Games</button></a>
+							<button class="play_roulette" style="background: #E3B75B; color: black; border: none; padding: 4px; width: 100%;">Play Games</button>
 						</div>						
 					</div>			
 				</div>
@@ -130,6 +130,36 @@
 	    </div>
 	  </div>
 	</div>
+	<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<img src="img/modal-info.png" width="60" />
+			<h3 class="modal-title" id="exampleModalLongTitle">Sorry</h3>
+			<!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>-->	
+		  </div>
+		  <div class="modal-body">
+			
+				<div class="row">
+					<div class="col-xs-12">
+					<p>Unable to play this game.<br>
+					You need to login or register first before play the game.
+					</p>
+					</div>
+				</div>
+			
+		  </div>
+		  <div class="clearfix"></div>
+		  <div class="modal-footer">
+			<button type="button" class="col-xs-6 no-padding gotoclose" data-dismiss="modal">Close</button>
+			<a href="index.html"><button type="button" class="gotocart col-xs-6 no-padding">Okay</button></a>
+			<!--<button type="button" class="saveimg btn btn-primary">Save changes</button>-->
+		  </div>
+		</div>
+	  </div>
+	</div>
 	<div class="ssm-overlay ssm-toggle-nav"></div>
 <section class="transition" style="margin-top:100%; width: 100%; height: 90%; z-index: 100; display: none; position: relative;">
 	<img src="img/loading.gif" width="20%" />
@@ -142,7 +172,11 @@
 if(localStorage.hd_lang==="IDN"){
 
 	$(".title span").html("Permainan");
-	$(".newsitem a button").html("Mainkan")
+	$(".newsitem a button").html("Mainkan");
+	$("#info .modal-body .row .col-xs-12 p").html("Tidak dapat memainkan permainan ini. Kamu perlu login atau daftar dahulu untuk bermain.");
+	$("#info .modal-title").html("Mohon maaf");
+	$("#info .modal-footer .gotoclose").html("Tutup");
+	$("#info .modal-footer .gotocart").html("Setuju");
 }
 $(".loading").show();
 $(".shoppage").hide();
@@ -152,21 +186,43 @@ $(document).ready(function(){
 	var sess_key = localStorage.hd_session_key;
 	var urlt = "http://haagendazs.echoscript.net/api/point_transaction?session_key="+ sess_key +"";
 	$("button.play_hod").click(function(){
-		 $.post(urlt)
-		    .done(function(data){
-		    	var respon = jQuery.parseJSON(data)
-		    	if(!data.is_error){
-		    		setTimeout('window.location.href = "games/houseofhd/index.html"; ',800);
-		    	}else{
-		    		$("#error").modal("show");
-		    		if(localStorage.hd_lang=="IDN"){
-		    			$("#error .modal-body p").html("Poin tidak mencukupi");
-		    		}else{
-		    			$("#error .modal-body p").html("Your point is not eligible.");
-		    		}
-		    	}
-		    })
-	})
+		if(localStorage.hd_session_key==undefined || localStorage.hd_session_key==""){
+			
+			$("#info").modal("show")
+			
+		}else{
+			
+			$.post(urlt)
+			.done(function(data){
+				var respon = jQuery.parseJSON(data)
+				if(!data.is_error){
+					setTimeout('window.location.href = "games/houseofhd/index.html"; ',800);
+				}else{
+					$("#error").modal("show");
+					if(localStorage.hd_lang=="IDN"){
+						$("#error .modal-body p").html("Poin tidak mencukupi");
+					}else{
+						$("#error .modal-body p").html("Your point is not eligible.");
+					}
+				}
+			})
+			
+		}
+	});
+	
+	$("button.play_roulette").click(function(){
+		
+		if(localStorage.hd_session_key==undefined || localStorage.hd_session_key==""){
+			
+			$("#info").modal("show")
+			
+		}else{
+		
+			window.location.href="roulette2.html";
+		
+		}
+		
+	});
 })
 </script>
 <script src="js/jquery.touchSwipe.min.js"></script>

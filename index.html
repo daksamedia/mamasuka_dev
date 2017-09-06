@@ -99,6 +99,17 @@ footer{
     <div class="col-xs-12 no-padding">
     		<input type="password" name="cpassword"  placeholder="Retype Password..."  /><span style="height: " class="hd-visible2"></span>
     </div>
+	<select name="sex">
+		<option value="">-- Select a Gender --</option>
+		<option value="Male">Male</option>
+		<option value="Female">Female</option>
+	</select>
+    <div class="col-xs-6 no-padding miniform" >
+      <input type="text" name="default_phone" placeholder="No. Handphone..."  />
+    </div>
+    <div class="col-xs-6 no-padding miniform birthday_field">
+      <input type="text" name="birthday" placeholder="e.g. YYYY-MM-DD" data-toggle="modal" data-target="#setdate" />
+    </div>
     <input type="hidden" name="login_type" class="email" value="EMAIL"  />
 	<input type="button" value="Register" />
     <p class="log">Already registered? <span class="login2" style="color:#f2bf0e"> Login Here</span></p>

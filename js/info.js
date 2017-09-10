@@ -321,9 +321,10 @@ $(document).ready(function()
 							$(".avatar").css("background","url("+pictprof+") white no-repeat center center").css("background-size","100% 120%");			
 						}
 				}else{
-					localStorage.login_hd="";
-				  	alert("Your session is out. Please re-login.");
-				  	window.location = "index.html";
+						localStorage.login_hd="";
+						alert("Your session is out. Please re-login.");
+						window.location = "index.html";
+						localStorage.hd_session_key="";
 				}
 			});
 		}
@@ -351,8 +352,9 @@ $(document).ready(function()
 			$(".greetings").html("Welcome to offical H&auml;agen-Dazs Indonesia Mobile Apps<br>")
 		}
 		$("nav .col-xs-6:first-child").next(".col-xs-6").hide();
-		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=login'><button style='font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:30px 0 10px;'>Login</button></a></div>");
-		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=signup'><button style='font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:5px 0;'>Register</button></a></div>");
+		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=login'><button style='padding: 3px 0px; font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:30px 0 10px;'>Login</button></a></div>");
+		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=signup'><button style='padding: 3px 0px; font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:5px 0;'>Register</button></a></div>");
+		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=loginfb'><img src='img/loginfb_min.jpg' style='margin:5px 0; width:100%;' /></a></div>");
 		
 	}
 

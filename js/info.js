@@ -346,15 +346,16 @@ $(document).ready(function()
 		$(".greetings").css("padding-left","0").css("font-size","9.4pt").css("margin-top","10px");
 		if(localStorage.hd_lang=="IDN"){
 			$(".welcome").html("Halo Pengunjung");
-			$(".greetings").html("Selamat datang di aplikasi H&auml;agen-Dazs Indonesia")
+			$(".greetings").html("Selamat datang di aplikasi H&auml;agen-Dazs Indonesia");
+			$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html'><button style='padding: 3px 0px; font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:30px 0 10px;'>Masuk / Daftar</button></a></div>");
 		}else{
 			$(".welcome").html("Hi There!");
 			$(".greetings").html("Welcome to offical H&auml;agen-Dazs Indonesia Mobile Apps<br>")
 		}
 		$("nav .col-xs-6:first-child").next(".col-xs-6").hide();
-		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=login'><button style='padding: 3px 0px; font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:30px 0 10px;'>Login</button></a></div>");
-		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=signup'><button style='padding: 3px 0px; font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:5px 0 10px;'>Register</button></a></div>");
-		$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=loginfb'><img src='img/loginfb_min.jpg' style='margin:5px 0; width:100%;' /></a></div>");
+		
+		//$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=signup'><button style='padding: 3px 0px; font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:5px 0 10px;'>Register</button></a></div>");
+		//$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html?go=loginfb'><img src='img/loginfb_min.jpg' style='margin:5px 0; width:100%;' /></a></div>");
 		
 	}
 

@@ -350,7 +350,8 @@ $(document).ready(function()
 			$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html'><button style='padding: 3px 0px; font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:30px 0 10px;'>Masuk / Daftar</button></a></div>");
 		}else{
 			$(".welcome").html("Hi There!");
-			$(".greetings").html("Welcome to offical H&auml;agen-Dazs Indonesia Mobile Apps<br>")
+			$(".greetings").html("Welcome to offical H&auml;agen-Dazs Indonesia Mobile Apps<br>");
+			$("nav").append("<div class='col-xs-12 no-padding'><a href='index.html'><button style='padding: 3px 0px; font-size:10pt; width:100%; background:none; text-align:center; border:1px solid white; margin:30px 0 10px;'>Login / Register</button></a></div>");
 		}
 		$("nav .col-xs-6:first-child").next(".col-xs-6").hide();
 		

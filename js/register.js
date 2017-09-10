@@ -82,6 +82,9 @@ $('document').ready(function()
 				{	
 					$(".loads").fadeIn();
 					$(".regisform").fadeOut();
+					document.addEventListener("backbutton", function (e) {
+						e.preventDefault();
+					}, false );
 					//$("#btn-submit").html('<span class="glyphicon glyphicon-transfer"></span> &nbsp; sending ...');
 				},
 				success :  function(response)

@@ -1,7 +1,3 @@
-/*
-Author: Pradeep Khodke
-URL: http://www.codingcage.com/
-*/
 
 $(document).ready(function()
 { 	
@@ -53,30 +49,32 @@ $(document).ready(function()
 			{	
 				$(".loads").fadeIn();
 				$(".loginform").fadeOut();
+				document.addEventListener("backbutton", function (e) {
+					e.preventDefault();
+				}, false );
 			},
 			success :  function(response)
 			   {
 			   		var respon = jQuery.parseJSON(response);
 					if(respon.is_error===false){
-						localStorage.login_hd_id = respon.payload.customer_id;
 						$(".loads").html('You are signing in...');
-						localStorage.login_hd="login";
-						localStorage.hd_session_key = respon.payload.session_key;
-						var update_device_token = "http://api.haagendazsindonesia.co.id/v1/update_device_token?session_key="+ respon.payload.session_key +"";
+						var update_device_token = "http://haagendazs.echoscript.net/api/update_device_token?session_key="+ respon.payload.session_key +"";
 						var device_token = localStorage.hd_device_token;
 						var param = {
 						 	device_token : device_token
 						}
-
+						
 				        $.post(update_device_token, param)
 					        .done(function(data){
 					        	var orderan = jQuery.parseJSON(data)
 					        	if(orderan.is_error=="false"|| orderan.is_error==false){
 					        		//alert("terkirim");
 					        		setTimeout('window.location.href = "home.html"; ',4000);
+									localStorage.login_hd="login";
+									localStorage.login_hd_id = respon.payload.customer_id;
+									localStorage.hd_session_key = respon.payload.session_key;
 					        	}else{
-					        		//alert("tidak terkirim");
-									setTimeout('window.location.href = "home.html"; ',4000);
+					        		$.post(this);
 					        	}
 					    })
 		

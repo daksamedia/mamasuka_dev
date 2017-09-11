@@ -293,7 +293,7 @@ $(document).ready(function()
 			$.getJSON(urlx,function(daxa){
 				if(daxa.is_error!=true){
 					//clearTimeout(waiting_time);
-					$(".name_menu, .username").html(""+daxa.payload[0].username+"");
+					$(".name_menu, .username").html(""+daxa.payload[0].full_name+"");
 						if(localStorage.hd_lang==="IDN"){
 							$(".welcome").html("Halo, "+daxa.payload[0].full_name+"");
 							$(".points_menu").html("Poin kamu : "+daxa.payload[0].point_balance+"");

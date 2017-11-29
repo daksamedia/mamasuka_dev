@@ -6,7 +6,7 @@ $(document).ready(function()
 	
 	// Get themes
 	
-	var urly="http://haagendazs.echoscript.net/api/theme?session_key="+ sess_key +"";
+	var urly="http://sandboxapi.haagendazsindonesia.co.id/v1/theme?session_key="+ sess_key +"";
 	$.getJSON(urly,function(dasa) {
 	    //console.log(dasa.id);
 	    if(dasa.payload[0].length!=0){
@@ -153,7 +153,8 @@ $(document).ready(function()
 	  
 	  //PUSH NOTIF CONFIG
 		//window.plugins.OneSignal.enableNotificationsWhenActive(true);
-		/* window.plugins.OneSignal.handleNotificationOpened(function(jsonData) {
+		/* 
+		window.plugins.OneSignal.handleNotificationOpened(function(jsonData) {
 			//alert("Notification opened: \n" + JSON.stringify(jsonData));
 			var additional = jsonData.notification.payload.additionalData;
 			if(additional.length!=0){
@@ -172,7 +173,7 @@ $(document).ready(function()
 	var sess_key = localStorage.hd_session_key;
 	
 	//Count Notification
-	var urlw = "http://haagendazs.echoscript.net/api/notification?session_key="+ sess_key +"&language_code=IDN";
+	var urlw = "http://sandboxapi.haagendazsindonesia.co.id/v1/notification?session_key="+ sess_key +"&language_code=IDN";
  	var sum_inbox = 0;
 
  	function count_notif(){
@@ -246,7 +247,7 @@ $(document).ready(function()
 				localStorage.hd_session_key="";
 				$("#logout-info").modal("show");
 				setTimeout(loggingout,300);
-				var cabut ="http://haagendazs.echoscript.net/api/logout?session_key="+ sess_key +"";
+				var cabut ="http://sandboxapi.haagendazsindonesia.co.id/v1/logout?session_key="+ sess_key +"";
 				$.getJSON(cabut,function(data){
 					if(data.is_error===false){
 						//alert("Thank you for using Häagen Dazs Apps. We're happy for having you.");
@@ -288,7 +289,7 @@ $(document).ready(function()
 		// Get user data
 		var sess_key = localStorage.hd_session_key;
 		var cust_id = localStorage.login_hd_id;
-		var urlx="http://haagendazs.echoscript.net/api/customer?session_key="+ sess_key +"&customer_id="+cust_id+"";
+		var urlx="http://sandboxapi.haagendazsindonesia.co.id/v1/customer?session_key="+ sess_key +"&customer_id="+cust_id+"";
 		function get_data(){
 			$.getJSON(urlx,function(daxa){
 				if(daxa.is_error!=true){

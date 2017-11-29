@@ -37,7 +37,7 @@ $(document).ready(function()
 				
 			type : 'POST',
 			//url  : 'engine/login_process.php',
-			url  : 'http://haagendazs.echoscript.net/api/auth/login',
+			url  : 'http://sandboxapi.haagendazsindonesia.co.id/v1/auth/login',
 			//crossDomain: true,
 			//headers: {
              // 'Access-Control-Allow-Origin': '*'
@@ -58,7 +58,7 @@ $(document).ready(function()
 			   		var respon = jQuery.parseJSON(response);
 					if(respon.is_error===false){
 						$(".loads").html('You are signing in...');
-						var update_device_token = "http://haagendazs.echoscript.net/api/update_device_token?session_key="+ respon.payload.session_key +"";
+						var update_device_token = "http://sandboxapi.haagendazsindonesia.co.id/v1/update_device_token?session_key="+ respon.payload.session_key +"";
 						var device_token = localStorage.hd_device_token;
 						var param = {
 						 	device_token : device_token
@@ -80,11 +80,33 @@ $(document).ready(function()
 		
 					}else{
 							
-						$(".loads").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+respon.status_msg+' !</div>');
+						$("body").append('<div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">'+
+						  '<div class="modal-dialog" role="document">'+
+							'<div class="modal-content">'+
+							  '<div class="modal-header">'+
+								'<img src="img/modal-error.png" width="60" />'+
+								'<h3 class="modal-title" id="exampleModalLongTitle">Gagal</h3>'+
+								
+							  '</div>'+
+							  '<div class="modal-body">'+
+								'<p>'+respon.status_msg+'</p>'+
+							  '</div>'+
+							  '<div class="clearfix"></div>'+
+							  '<div class="modal-footer">'+
+								'<button type="button" class="col-xs-12 no-padding closebtn" data-dismiss="modal">Close</button>'+
+								'<!--<button type="button" class="saveimg btn btn-primary">Save changes</button>-->'+
+							  '</div>'+
+							'</div>'+
+						  '</div>'+
+						'</div>');
+						$("#warning").modal("show");
+						//$(".loads").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+respon.status_msg+' !</div>');
 						$(".loginform").fadeIn();
 						setTimeout(function () {
-
-							$(".alert-danger").fadeOut("slow");
+							
+							$(".loads").fadeOut("slow")
+							//$("#warning").modal("hide");
+							//$(".alert-danger").fadeOut("slow");
 
 						},1000)
 					

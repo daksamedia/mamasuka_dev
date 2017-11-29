@@ -30,7 +30,18 @@ var app = {
         // Enable to debug issues.
         // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
   
-       
+		window.plugins.OneSignal.handleNotificationOpened(function(jsonData) {
+			//alert("Notification opened: \n" + JSON.stringify(jsonData));
+			var additional = jsonData.notification.payload.additionalData;
+			if(additional.length!=0){
+				var url = jsonData.notification.payload.additionalData.url;
+				var id = jsonData.notification.payload.additionalData.id;
+				window.location.href=url + '.html?id=' + id;
+			}else{
+				//alert("Notification opened: \n" + JSON.stringify(jsonData));
+			}
+			console.log('didOpenRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
+		});
         //Call syncHashedEmail anywhere in your app if you have the user's email.
         //This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
         //window.plugins.OneSignal.syncHashedEmail(userEmail);

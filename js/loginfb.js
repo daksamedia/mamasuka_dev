@@ -41,7 +41,7 @@
 								$.ajax({
 									
 									type : 'POST',
-									url  : 'http://haagendazs.echoscript.net/api/auth/register',
+									url  : 'http://sandboxapi.haagendazsindonesia.co.id/v1/auth/register',
 									data : param,
 									beforeSend: function()
 									{	
@@ -79,7 +79,7 @@
 												
 												type : 'POST',
 												//url  : 'engine/login_process.php',
-												url  : 'http://haagendazs.echoscript.net/api/auth/login',
+												url  : 'http://sandboxapi.haagendazsindonesia.co.id/v1/auth/login',
 												//crossDomain: true,
 												//headers: {
 												 // 'Access-Control-Allow-Origin': '*'
@@ -107,7 +107,7 @@
 													if(!cret.is_error){
 														
 														$(".loads").html('You are signing in...');
-														var update_device_token = "http://haagendazs.echoscript.net/api/update_device_token?session_key="+ respox.payload.session_key +"";
+														var update_device_token = "http://sandboxapi.haagendazsindonesia.co.id/v1/update_device_token?session_key="+ respox.payload.session_key +"";
 														var device_token = localStorage.hd_device_token;
 														var param = {
 															device_token : device_token
@@ -115,16 +115,19 @@
 
 														$.post(update_device_token, param)
 															.done(function(data){
-																var orderan = jQuery.parseJSON(data)
+																var orderan = jQuery.parseJSON(data);	
 																if(orderan.is_error=="false"|| orderan.is_error==false){
 																	//alert("terkirim");
 																	localStorage.login_hd="login";
 																	localStorage.hd_session_key = respox.payload.session_key;
 																	localStorage.login_hd_id = respox.payload.customer_id;
+																	
 																	setTimeout('window.location.href = "home.html"; ',4000);
 																}else{
 																	//alert("tidak terkirim");
-																	//setTimeout('window.location.href = "home.html"; ',4000);
+																	//setTimeout('window.location.href = "home.html"; ',4000
+																	$(".loads").css('margin-bottom','30px');
+																	$(".loads").html('Oops! Something went not right.<br /> Because of '+ orderan.status_msg +'');
 																	$.post(this);
 																}
 															})
@@ -136,6 +139,8 @@
 														
 													}else{
 														$.ajax(this);
+														$(".loads").css('margin-bottom','30px');
+														$(".loads").html('Oops! Something went not right.<br /> Because of '+ cret.status_msg +'');
 													}
 												}
 											});
@@ -157,7 +162,7 @@
 													
 													type : 'POST',
 													//url  : 'engine/login_process.php',
-													url  : 'http://haagendazs.echoscript.net/api/auth/login',
+													url  : 'http://sandboxapi.haagendazsindonesia.co.id/v1/auth/login',
 													//crossDomain: true,
 													//headers: {
 													 // 'Access-Control-Allow-Origin': '*'
@@ -185,7 +190,7 @@
 														if(!cret.is_error){
 															
 															$(".loads").html('You are signing in...');
-															var update_device_token = "http://haagendazs.echoscript.net/api/update_device_token?session_key="+ respox.payload.session_key +"";
+															var update_device_token = "http://sandboxapi.haagendazsindonesia.co.id/v1/update_device_token?session_key="+ respox.payload.session_key +"";
 															var device_token = localStorage.hd_device_token;
 															var param = {
 															 	device_token : device_token
@@ -203,6 +208,16 @@
 														        	}else{
 														        		//alert("tidak terkirim");
 																		//setTimeout('window.location.href = "home.html"; ',4000);
+																		//$(".loads").fadeOut();
+																		//$(".regisform").fadeIn();
+																		$(".signup").fadeIn("slow");
+																		$(".login").fadeIn("slow");
+																		$(".signfb").fadeIn("slow");
+																		$(".skip").fadeIn("slow");
+																		//$(".loads").html('Failed to login because '+ orderan.status_msg +'');
+																		$(".loads").css('margin-bottom','30px');
+																		$(".loads").html('Oops! Something went not right.<br /> Because of '+ orderan.status_msg +'');
+																		setTimeout('$(".loads").fadeOut();',4000);
 																		$.post(this);
 														        	}
 														    })
@@ -211,6 +226,8 @@
 															
 														}else{
 															$.ajax(this);
+															$(".loads").css('margin-bottom','30px');
+															$(".loads").html('Oops! Something went not right.<br /> Because of '+ cret.status_msg +'');
 														}
 													}
 												})

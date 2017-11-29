@@ -41,7 +41,22 @@
 		color:white;
 		text-transform: uppercase;
 	}
-
+	
+	.order_redeem{
+		background:#f5c82e;
+		margin: 15px 0 !important;
+		padding: 14px 18px !important;
+		
+	}
+	
+	.order_redeem .order_voucher{
+		text-align:center !important;
+		margin-bottom:10px !important;
+	}
+	
+	.order_redeem .order_expired{
+		text-align:center !important;
+	}
 </style>
 </head>
 <body></div>
@@ -96,10 +111,17 @@
 				<div class="col-xs-7 align-left no-padding order_delivery_address">
 					
 				</div>
-
-				<div class="col-xs-12 align-left no-padding order_voucher">
-					Voucher code : <strong></strong>
+				
+				<div class="col-xs-12 order_redeem">
+					<div class="col-xs-12 align-left no-padding order_voucher">
+						Voucher code : <strong></strong>
+					</div>
+					<div class="col-xs-12 align-left no-padding order_expired">
+						<span>Best use before : <strong></strong></span>
+					</div>
 				</div>
+				
+				
 				
 				<div class="clearfix"></div>
 				<div class="col-xs-12 no-padding align-left title_order">
@@ -210,6 +232,7 @@ $(document).ready(function () { // load json file using jquery ajax
 		$(".delivery_status .title").html("Status Pengiriman");
 		$(".order_delivery p").html("<strong>Rincian Pengiriman</strong>");
 		$(".order_status p").html("Status Pesanan");
+		$(".order_expired span").html("Gunakan kode sebelum :");
 		$(".th-inv-1").html("Produk");
 		$(".th-inv-2").html("Jml");
 		$(".th-inv-3").html("Harga");
@@ -421,8 +444,8 @@ $(document).ready(function () { // load json file using jquery ajax
 
 	var getID = getUrlParameter('id');
 	var sess_key = localStorage.hd_session_key;
-	var urlx = "http://haagendazs.echoscript.net/api/order?session_key="+ sess_key +"&order_id="+ getID +"&detail_mode=1";
-	var share_order = "http://haagendazs.echoscript.net/api/share_order?session_key="+ sess_key +"&order_id="+ getID +"";
+	var urlx = "http://sandboxapi.haagendazsindonesia.co.id/v1/order?session_key="+ sess_key +"&order_id="+ getID +"&detail_mode=1";
+	var share_order = "http://sandboxapi.haagendazsindonesia.co.id/v1/share_order?session_key="+ sess_key +"&order_id="+ getID +"";
 	var hd_kirim;
 	var status_order;
 
@@ -432,9 +455,11 @@ $(document).ready(function () { // load json file using jquery ajax
 			$(".details").find(".order_date").html(""+ menu.payload[0].__created +"");
 			if(menu.payload[0].redeem_code != null){
 				if(localStorage.hd_lang==="IDN"){
-					$(".details").find(".order_voucher").html("Kode Penukaran &nbsp; : &nbsp;<strong>"+ menu.payload[0].redeem_code +"</strong>");
+					$(".details").find(".order_voucher").html("Kode Penukaran &nbsp; : &nbsp;<br><strong style='font-size:25px;'>"+ menu.payload[0].redeem_code +"</strong>");
+					$(".details").find(".order_expired").html("Gunakan kode sebelum &nbsp; : &nbsp;<strong>"+ menu.payload[0].redeem_code_expired +"</strong>");
 				}else{
-					$(".details").find(".order_voucher").html("Redeem Code &nbsp; : &nbsp;<strong>"+ menu.payload[0].redeem_code +"</strong>");
+					$(".details").find(".order_voucher").html("Redeem Code &nbsp; : &nbsp;<br><strong style='font-size:25px;'>"+ menu.payload[0].redeem_code +"</strong>");
+					$(".details").find(".order_expired").html("Best use code before &nbsp; : &nbsp;<strong>"+ menu.payload[0].redeem_code_expired +"</strong>");
 				}
 				
 			}else{
@@ -471,7 +496,7 @@ $(document).ready(function () { // load json file using jquery ajax
 				}	
 				
 			}else{
-				/*var urly = "http://haagendazs.echoscript.net/api/customer?session_key="+ sess_key +"&customer_id="+ menu.payload[0].gift_customer_id +"";
+				/*var urly = "http://sandboxapi.haagendazsindonesia.co.id/v1/customer?session_key="+ sess_key +"&customer_id="+ menu.payload[0].gift_customer_id +"";
 				$.getJSON(urly,function(res){
 					$(".details").find(".order_delivery").append("Send to <strong>"+ res.payload[0].full_name +"</strong>");
 					

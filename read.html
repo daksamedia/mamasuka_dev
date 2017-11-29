@@ -115,9 +115,9 @@ $(document).ready(function() {
 	var getID = getUrlParameter('id');
 	var sess_key = localStorage.hd_session_key;
 	if(localStorage.hd_lang==="IDN"){
-		var urlt = "http://haagendazs.echoscript.net/api/news?session_key="+ sess_key +"&news_id="+ getID +"&language_code=IDN";
+		var urlt = "http://sandboxapi.haagendazsindonesia.co.id/v1/news?session_key="+ sess_key +"&news_id="+ getID +"&language_code=IDN";
  	}else{
- 		var urlt = "http://haagendazs.echoscript.net/api/news?session_key="+ sess_key +"&news_id="+ getID +"&language_code=ENG";
+ 		var urlt = "http://sandboxapi.haagendazsindonesia.co.id/v1/news?session_key="+ sess_key +"&news_id="+ getID +"&language_code=ENG";
  	}
 	
 	$.getJSON(urlt,function(news){

@@ -16,7 +16,6 @@
 	.slick-list{
 		height: inherit !important;
 	}
-
 	.header{
 		display: none;
 	}
@@ -289,9 +288,7 @@ $(".sendmy").hide();
 $(".sendgift").hide();
 $(".codinfo").hide();
 $(".transinfo").hide();
-
 if(localStorage.hd_lang==="IDN"){
-
 	/* SECTION 1 */
 	$(".title span").html("Transaksi");
 	$(".tab-click1").html("Pengiriman");
@@ -325,9 +322,7 @@ if(localStorage.hd_lang==="IDN"){
 	$(".cardinfo h3").html("Informasi Nota");
 	$(".browse").html("Telusuri...");
 	//$("label[for='radio-z']").html("Kirim sebagai hadiah");
-
 }
-
 $(document).ready(function() {
 	$( ".cardinfo" ).validate({
 	  rules: {
@@ -339,52 +334,46 @@ $(document).ready(function() {
 	    }
 	  }
 	});
-
-
 	var fd = new FormData();
 	$(".header").show("fast")
-
 	/* $("input[name='card number']").keydown(function(){
 		$("input[name='validation']").trigger("click")
 	}) */
 	 var mybank;
 	 var sess_key = localStorage.hd_session_key;
 	 var user_id = localStorage.login_hd_id;
-	 var getorder = "http://haagendazs.echoscript.net/api/order?session_key="+ sess_key +"&customer_id="+ user_id +"&order_status=UNPAID";
-	 var ulz = "http://haagendazs.echoscript.net/api/payment_confirmation?session_key="+ sess_key +"";
-	 var urba = "http://haagendazs.echoscript.net/api/payment_channel?session_key="+ sess_key +"";
-
+	 var getorder = "http://sandboxapi.haagendazsindonesia.co.id/v1/order?session_key="+ sess_key +"&customer_id="+ user_id +"&order_status=UNPAID";
+	 var ulz = "http://sandboxapi.haagendazsindonesia.co.id/v1/payment_confirmation?session_key="+ sess_key +"";
+	 var urba = "http://sandboxapi.haagendazsindonesia.co.id/v1/payment_channel?session_key="+ sess_key +"";
 	
 	$.getJSON(getorder, function(order){
 		for (var i = 0, buset = order.payload.length; i < buset; i++) {
-			$("select.hd_order").append('<option value="'+ order.payload[i].order_id +'">'+ order.payload[i].order_id +' - <strong> Rp. '+ addCommas(order.payload[i].total_value) +'</strong></option>');
+			if(order.payload[i].paid_amount > 0){
+				$("select.hd_order").append('<option value="'+ order.payload[i].order_id +'">'+ order.payload[i].order_id +' - <strong> Rp. '+ addCommas((order.payload[i].total_value - order.payload[i].paid_amount)) +'</strong></option>');
+			}else{
+				$("select.hd_order").append('<option value="'+ order.payload[i].order_id +'">'+ order.payload[i].order_id +' - <strong> Rp. '+ addCommas(order.payload[i].total_value) +'</strong></option>');
+			}
+			
 		}
 	});
-
 	$.getJSON(urba, function(bank){
 		for (var i = 0, buset = bank.payload.length; i < buset; i++) {
 			
 			$("select.hd_bank_to").append('<option style="text-transform:uppercase;" value="'+ bank.payload[i].payment_channel_id +'">BANK '+ bank.payload[i].bank_name +' - '+ bank.payload[i].bank_account_number +'</option>');
 		}
 	});
-
 	 $(".btnfix .continue").css("opacity","0.3");
 	 $(".btnfix .continue").attr("disabled",true);
 	 
 	 function validasiform(){
 	 	if($("input[name='transfer_date']").val() != "" && $("input[name='amount']").val() !="" && $("select.hd_order").val()!="" && $(".getpict img").attr("src")!="" && $("select.hd_bank").val()!="" && $("select.hd_bank_to").val()!="" && $("input[name='acc_name']").val()!=""){
-
 	 		$(".btnfix .continue").css("opacity","1");
 	 		$(".btnfix .continue").attr("disabled",false);
-
 	 	}else{
-
 	 		$(".btnfix .continue").css("opacity","0.3");
 	 		$(".btnfix .continue").attr("disabled",true);
-
 	 	}
 	 }
-
 	 $("#setdate .modal-footer button").click(function(){
 	 	$("input[name='transfer_date']").val($("#setdate .modal-body .datepicker .labels").html());
 	 	console.log($("#setdate .modal-body .datepicker .labels").html());
@@ -393,7 +382,6 @@ $(document).ready(function() {
  	 $("input[name='transfer_date']").click(function(){
  	 	$("#setdate").modal("show");
  	 });
-
 	 $("input[name='amount']").keyup(function(event){
 	 	if(event.which >= 37 && event.which <= 40) return;
 	 	// format number
@@ -405,29 +393,20 @@ $(document).ready(function() {
 		  });
 	 	
 	 })
-
 	 $("input[name='acc_name']").keydown(validasiform)
-
 	 $("input[name='acc_num']").keydown(validasiform)
-
 	 $("select.hd_order").change(function(){
 	 	validasiform();
 	 	console.log($(this).val())
-
 	 });
-
 	 $("select.hd_bank").change(function(){
 	 	validasiform();
 	 	console.log($(this).val())
-
 	 });
-
 	 $("select.hd_bank_to").change(function(){
 	 	validasiform();
 	 	console.log($(this).val())
-
 	 });
-
 	function clearCache() {
 	    navigator.camera.cleanup();
 	}
@@ -438,16 +417,13 @@ $(document).ready(function() {
 	        byteString = atob(dataURI.split(',')[1]);
 	    else
 	        byteString = unescape(dataURI.split(',')[1]);
-
 	    // separate out the mime component
 	    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
 	    // write the bytes of the string to a typed array
 	    var ia = new Uint8Array(byteString.length);
 	    for (var i = 0; i < byteString.length; i++) {
 	        ia[i] = byteString.charCodeAt(i);
 	    }
-
 	    return new Blob([ia], {type:mimeString});
 	}
 	function camSuccess(imageURI) {
@@ -456,11 +432,8 @@ $(document).ready(function() {
 		
 		// Proses Konversi base64 ke Blob
 		var blob = dataURItoBlob(dataURI);
-
 		var fieldName = "attachment";
 		var fileName = "displaypict"
-
-
 		// Field File
 		fd.append(fieldName, blob, fileName);
 		$(".loading").fadeOut("fast");
@@ -505,22 +478,18 @@ $(document).ready(function() {
 		*/
 	
 	}
-
 	
 	
 	function camFail(message) {
 		alert('Failed because: ' + message);
 		$(".loading").fadeOut("fast");
 	}
-
 	$(".cam").click(function(){
 		navigator.camera.getPicture(camSuccess, camFail, { quality: 70,
 		destinationType: Camera.DestinationType.DATA_URL});
 		$('#chgimg').modal('hide');
 		$('.loading').fadeIn('slow');
 	});
-
-
 	$(".gal").click(function(){
 		navigator.camera.getPicture(galSuccess, galFail, { quality: 70,
 			destinationType: Camera.DestinationType.DATA_URL,
@@ -529,17 +498,14 @@ $(document).ready(function() {
 		$('#chgimg').modal('hide');
 		$('.loading').fadeIn('slow');
 	});
-
 	function galSuccess(imageURI) {
 		var dataURI = "data:image/jpeg;base64,"+imageURI+"";
 		// Prepare Parameter
 		
 		// Proses Konversi base64 ke Blob
 		var blob = dataURItoBlob(dataURI);
-
 		var fieldName = "attachment";
 		var fileName = "displaypict"
-
 		// Field File
 		fd.append(fieldName, blob, fileName);
 		$(".loading").fadeOut("fast");
@@ -582,12 +548,12 @@ $(document).ready(function() {
 		});
 		*/
 	}
-
 	function galFail(message) {
 		alert('Failed because: ' + message);
 	}
-
 	$(".btnfix .continue").click(function(){
+		$(this).css("opacity","0.3");
+	 	$(this).attr("disabled",true);
 		$(".loading").fadeIn("fast");
 		var payment_channel_id = $("select.hd_bank_to").val();
 		var order_id = $("select.hd_order").val();
@@ -611,7 +577,6 @@ $(document).ready(function() {
 	        		$(".loading").fadeOut("fast");
 	        		$("#success").modal("show");
 	        		setTimeout('window.location.href = "order.html?id='+ order_id +'"; ',300);
-
 	        	}else{
 	        		$("#error .modal-body p").html(respon.status_msg);
 	        		$("#error").modal("show");
@@ -635,8 +600,10 @@ $(document).ready(function() {
 	        		$(".loading").fadeOut("fast");
 	        		$("#success").modal("show");
 	        		setTimeout('window.location.href = "order.html?id='+ order_id +'"; ',800);
-
+					
 	        	}else{
+					$(".btnfix .continue").css("opacity","1");
+					$(".btnfix .continue").attr("disabled",false);
 	        		//setTimeout('window.location.href = "order.html?id='+ order_id +'"; ',800);
 	        		if(respon.status_code=="501" || respon.status_code==501){
 	        			if(localStorage.hd_lang=="IDN"){
@@ -663,9 +630,10 @@ $(document).ready(function() {
 				$("#error .modal-body p").html(respon.status_msg);
         		$("#error").modal("show");
         		$(".loading").fadeOut("fast");
+				$(".btnfix .continue").css("opacity","1");
+				$(".btnfix .continue").attr("disabled",false);
 			}
 		});
-
 		
 	})
 	
@@ -674,8 +642,6 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
-
-
 $(document).ready(function() {
   'use strict';
   
@@ -684,16 +650,13 @@ $(document).ready(function() {
     $swipeTabsContentContainer = $('.swipe-tabs-container'),
     currentIndex = 0,
     activeTabClassName = 'active-tab';
-
   $swipeTabsContainer.on('init', function(event, slick) {
     $swipeTabsContentContainer.removeClass('invisible');
     $swipeTabsContainer.removeClass('invisible');
-
     currentIndex = slick.getCurrent();
     $swipeTabs.removeClass(activeTabClassName);
         $('.swipe-tab[data-slick-index=' + currentIndex + ']').addClass(activeTabClassName);
   });
-
   $swipeTabsContainer.slick({
     //slidesToShow: 3.25,
     slidesToShow: 2,
@@ -707,9 +670,7 @@ $(document).ready(function() {
     animating: false,
     focusOnSelect: true,
     fade: false,
-
   });
-
    $swipeTabsContentContainer.slick({
     asNavFor: $swipeTabsContainer,
     adaptiveHeight: true,
@@ -733,8 +694,6 @@ $(document).ready(function() {
     centerMode: true,
     centerPadding: '1px',
   });
-
-
   $swipeTabs.on('click', function(event) {
         // gets index of clicked tab
         currentIndex = $(this).data('slick-index');
@@ -744,7 +703,6 @@ $(document).ready(function() {
         $swipeTabsContentContainer.slick('slickGoTo', currentIndex);
    
     });
-
     //initializes slick navigation tabs swipe handler
     $swipeTabsContentContainer.on('swipe', function(event, slick, direction) {
       currentIndex = $(this).slick('slickCurrentSlide');

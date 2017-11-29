@@ -267,9 +267,9 @@ $(document).ready(function() {
 	}
   var cust_id = localStorage.login_hd_id;
   var sess_key = localStorage.hd_session_key;
-  var urlx = "http://haagendazs.echoscript.net/api/order?session_key="+  sess_key +"&customer_id="+  cust_id +"";
-  var urlz = "http://haagendazs.echoscript.net/api/customer?session_key="+  sess_key +"&customer_id="+  cust_id +"";
-  var claim_redeem = "http://haagendazs.echoscript.net/api/claim_order?session_key="+ sess_key +"";
+  var urlx = "http://sandboxapi.haagendazsindonesia.co.id/v1/order?session_key="+  sess_key +"&customer_id="+  cust_id +"";
+  var urlz = "http://sandboxapi.haagendazsindonesia.co.id/v1/customer?session_key="+  sess_key +"&customer_id="+  cust_id +"";
+  var claim_redeem = "http://sandboxapi.haagendazsindonesia.co.id/v1/claim_order?session_key="+ sess_key +"";
   var fondues = $(".swipe-tab-content .history");
 
   $(".redeemnow button").click(function(){

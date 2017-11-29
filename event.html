@@ -114,7 +114,7 @@ $(document).ready(function() {
 
 	var getID = getUrlParameter('id');
 	var sess_key = localStorage.hd_session_key;
-	var urlt = "http://haagendazs.echoscript.net/api/promotion?session_key="+ sess_key +"&&promotion_id="+ getID +"";
+	var urlt = "http://sandboxapi.haagendazsindonesia.co.id/v1/promotion?session_key="+ sess_key +"&&promotion_id="+ getID +"";
 	$.getJSON(urlt,function(news){
 		
 		var berita = $(".newsread");

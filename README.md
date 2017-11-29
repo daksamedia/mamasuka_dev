@@ -1,2 +1,1 @@
-# mamasuka_dev
-siapa saja suka , dimana - mana suka
+# mamasuka_pro

@@ -261,7 +261,7 @@ $( document ).ready( function() {
 	
 	var sess_key = localStorage.hd_session_key;
 	var getID = getUrlParameter('id');
-	var urlx = "http://haagendazs.echoscript.net/api/store?session_key="+ sess_key +"&store_id="+getID;
+	var urlx = "http://sandboxapi.haagendazsindonesia.co.id/v1/store?session_key="+ sess_key +"&store_id="+getID;
 	$.getJSON(urlx,function(store){
 		
 		var toko = $(".store");

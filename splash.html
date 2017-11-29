@@ -21,7 +21,7 @@ var canvas, stage, exportRoot;
 function init() {
 	// --- write your JS code here ---
 	var sess_key = localStorage.hd_session_key;
-	var getprov = "http://haagendazs.echoscript.net/api/province?session_key="+ sess_key +"";
+	var getprov = "http://sandboxapi.haagendazsindonesia.co.id/v1/province?session_key="+ sess_key +"";
 
 	$.getJSON(getprov,function(check){
 		//console.log(provinsi.payload[2].province_name);

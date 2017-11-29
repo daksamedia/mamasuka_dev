@@ -234,7 +234,7 @@ $(document).ready(function () { // load json file using jquery ajax
 	
 	var getID = getUrlParameter('id');
 	var sess_key = localStorage.hd_session_key;
-	var urlx = "http://haagendazs.echoscript.net/api/product?session_key="+ sess_key +"&product_id="+ getID +"";
+	var urlx = "http://sandboxapi.haagendazsindonesia.co.id/v1/product?session_key="+ sess_key +"&product_id="+ getID +"";
 	$.getJSON(urlx,function(menu){
 		$(".details").find(".title").html(""+ menu.payload[0].product_name +"");
 		$(".details").find(".desc").html(""+ menu.payload[0].product_description +"");

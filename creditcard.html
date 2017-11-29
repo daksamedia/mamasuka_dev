@@ -425,13 +425,13 @@ $(document).ready(function() {
 	var vouchertype;
 	$(".usevoucher").attr("disabled",false);
 	$(".usevoucher").css("opacity","1");
-	var get_payment = "http://haagendazs.echoscript.net/api/payment_channel?session_key="+ sess_key +""
+	var get_payment = "http://sandboxapi.haagendazsindonesia.co.id/v1/payment_channel?session_key="+ sess_key +""
 	
 	/* ACTION VALIDATION COUPON */
 	$('.xxx').keyup(function(){
 			$('.voucherinp').css("background","url(img/loading.gif) no-repeat 98% center");
 			$('.voucherinp').css("background-size","contain");
-			urlx = "http://haagendazs.echoscript.net/api/coupon?session_key="+  sess_key +"&coupon_code="+ $(this).val() +"";
+			urlx = "http://sandboxapi.haagendazsindonesia.co.id/v1/coupon?session_key="+  sess_key +"&coupon_code="+ $(this).val() +"";
 			$.getJSON(urlx,function(vocer){
 		   		
 		   		//for(var i = 0, len = vocer.payload.length; i < len; i++){
@@ -467,7 +467,16 @@ $(document).ready(function() {
 
 
 	/* ACTION FOR USE VOUCHER FUNCTION */
+	var payByVoucherInProgress = false;
 	function usevoucher(){
+		// Just reject when this function in progress
+		if(payByVoucherInProgress){
+			return;
+		}
+		
+		// Set In Progress
+		payByVoucherInProgress = true;
+		
 		var coupon_code = $('.voucherinp').val();
 
 		var param = {
@@ -475,13 +484,13 @@ $(document).ready(function() {
 		}
 
 		//GET VOUCHER VALUE
-		/* urlx = "http://haagendazs.echoscript.net/api/coupon?session_key="+  sess_key +"&coupon_code="+ coupon_code +"";
+		/* urlx = "http://sandboxapi.haagendazsindonesia.co.id/v1/coupon?session_key="+  sess_key +"&coupon_code="+ coupon_code +"";
 		$.getJSON(urlx,function(vocer){
 			nilai_voucher = vocer.payload[0].value;
 		}) */
 
 		//APPLY VOUCHER VALUE
-		var urs = "http://haagendazs.echoscript.net/api/coupon_payment?session_key="+ sess_key +"&order_id="+ getUrlParameter('id') +"&coupon_code="+ coupon_code +"";
+		var urs = "http://sandboxapi.haagendazsindonesia.co.id/v1/coupon_payment?session_key="+ sess_key +"&order_id="+ getUrlParameter('id') +"&coupon_code="+ coupon_code +"";
 
 		$.post(urs, param)
 	        .done(function(data){
@@ -511,9 +520,9 @@ $(document).ready(function() {
 			   	}else{
 			   		$(this).addClass("col-xs-12");
 					$(this).removeClass("col-xs-6");
-					$("#coupon_success .modal-footer .apply_coupon").remove();
-					
-
+					$("#coupon_success .modal-footer .apply_coupon").remove();					
+					$(".usevoucher").attr("disabled",false);
+					$(".usevoucher").css("opacity","1");
 			   		$("#error").modal("show");
 			   		$("#coupon_success").modal("hide");
 			   		if(localStorage.hd_lang=="IDN"){
@@ -528,6 +537,9 @@ $(document).ready(function() {
 			   			$("#error .modal-body p").html("Error! "+ response.status_msg);
 			   		}			   		
 			   	}
+				
+				// Kembalikan flag in progress
+				payByVoucherInProgress = false;
 	        })
 
 		
@@ -560,14 +572,16 @@ $(document).ready(function() {
 	function validatevoucher(){
 		var coupon_code = $(".vouchersec input").val();
 		//var order_id = order_id;
-
+		$(".usevoucher").attr("disabled","true");
+		$(".usevoucher").css("opacity","0.3");
+		
 		var param = {
 			coupon_code : coupon_code,
 			order_id : order_id
 		}
 
 		if(coupon_code!=""){
-			var post_voucher = "http://haagendazs.echoscript.net/api/calculate_order?session_key="+ sess_key +"";
+			var post_voucher = "http://sandboxapi.haagendazsindonesia.co.id/v1/calculate_order?session_key="+ sess_key +"";
 
 			$.post(post_voucher, param)
 		        .done(function(data){
@@ -586,7 +600,7 @@ $(document).ready(function() {
 		        			$("#coupon_success .modal-body p").html("Coupon will discount <strong>Rp. "+ addCommas(nilai_voucher) +"</strong> from total price. Click 'Use Coupon' to apply coupon.");
 		        			$("#coupon_success .modal-footer").append("<button class='col-xs-6 apply_coupon'>Use Coupon</button>");
 		        		}
-
+						
 		        		$("#coupon_success .modal-footer .closebtn").click(function(){
 		        			$(this).addClass("col-xs-12");
 		        			$(this).removeClass("col-xs-6");
@@ -594,6 +608,8 @@ $(document).ready(function() {
 		        		});
 		        		$(".apply_coupon").click(usevoucher);
 		        	}else{
+						$(".usevoucher").attr("disabled",false);
+						$(".usevoucher").css("opacity","1");
 		        		$("#error").modal("show");
 		        		if(localStorage.hd_lang=="IDN"){
 		        			$("#error .modal-title").html("Kupon Salah");
@@ -607,6 +623,8 @@ $(document).ready(function() {
 		        })
 		}else{
 			$("#error").modal("show");
+			$(".usevoucher").attr("disabled",false);
+			$(".usevoucher").css("opacity","1");
     		if(localStorage.hd_lang=="IDN"){
     			$("#error .modal-title").html("Kupon Kosong");
     			$("#error .modal-body p").html("Kolom isian kosong.");
@@ -622,7 +640,7 @@ $(document).ready(function() {
 	/* CONDITION IF ORDER ID IS AVAILABLE OR NOT */
 	if(order_id){
 		var hd_current_order = order_id;
-		var urln = "http://haagendazs.echoscript.net/api/order?session_key="+ sess_key +"&order_id="+ order_id +"&detail_mode=1";
+		var urln = "http://sandboxapi.haagendazsindonesia.co.id/v1/order?session_key="+ sess_key +"&order_id="+ order_id +"&detail_mode=1";
 		$(".sect-2").append('<div class="col-xs-12 no-padding order-list" style="margin-bottom:13px !important">'+
 						
 			'</div>'+
@@ -672,14 +690,14 @@ $(document).ready(function() {
 			            '<div class="col-xs-2" style="background:#e4e4e4; text-align: center; padding: 5px;"> - </div>'+
 			            '<div class="col-xs-4 priceperitem" style="background:#E3B75B; text-align: center; padding: 5px;">Rp. '+ addCommas(pesanan.payload[0].tax) +'</div>'+
 			         '</div>'
-				)
+			)
 
 			if(localStorage.hd_lang=="IDN"){
 				$(".label-tax").html("PPN 10%");
 				$(".label-sc").html("Biaya layanan");
 				$(".label-deliv").html("Ongkos Kirim");
 			}
-
+			
 			if(pesanan.payload[0].transaction.length > 0){
 				var gt = (pesanan.payload[0].total_value - pesanan.payload[0].transaction[0].value)
 				if(pesanan.payload[0].transaction[0].channel_type=="COUPON"){
@@ -854,7 +872,12 @@ $(document).ready(function() {
 		$("#sprintasia .modal-body iframe").attr("src",url);
 	}
 	
-	
+	$("#coupon_success .modal-footer .closebtn").click(function(){
+		
+		$(".usevoucher").attr("disabled",false);
+		$(".usevoucher").css("opacity","1");
+		
+	})
 	
 	$("#sprintasia .modal-footer button").click(function(){
 		$("#sprintasia .modal-body iframe").attr("src","");

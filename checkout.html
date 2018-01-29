@@ -179,12 +179,13 @@
 						</div>
 						<div class="sendgift">
 							<div class="ui-widget">
-							<input class="hd_recipient2" name="hd_recipient2" type="text" placeholder="Name of recipient.."  />
+							<input class="hd_recipient2" name="hd_recipient2" type="text" placeholder="Username of recipient.."  />
 							<div class="hd_suggestion"></div>
 							</div>
 							<div class="col-xs-12 hd_recipient_info" style="background: #ffefb0; border: 1px solid #d6ba4a; padding:17px; margin-top:13px">
 								
 							</div>
+							
 							<!--<div class="col-xs-12 no-padding align-left">
 								<span><input id="radio-4" class="radio-custom" name="radio-err" type="radio">
 								<label for="radio-4" class="radio-custom-label">Save</label></span>
@@ -220,7 +221,7 @@
 								</p>-->
 							</div>
 							<div class="col-xs-12 no-padding hd_newaddress">
-								<input name="hd_name3" type="text" style="width:100%; border: #e4e4e4 1px solid; padding:4px; padding:4px; background:none; margin-bottom:15px; margin-top:15px;" placeholder="Input recipient name..."  />
+								<input name="hd_name3" type="text" style="width:100%; border: #e4e4e4 1px solid; padding:4px; padding:4px; background:none; margin-bottom:15px; margin-top:15px;" placeholder="Name of recipient.."  />
 								<input name="hd_phone3" type="text" style="width:100%; border: #e4e4e4 1px solid; padding:4px; padding:4px; background:none; margin-bottom:15px; margin-top:15px;" placeholder="Recipient phone number..."  />
 								<input name="hd_address3" type="text" style="width:100%; border: #e4e4e4 1px solid; padding:4px; padding:4px; background:none; margin-bottom:15px; margin-top:15px;" placeholder="Input Address..."  />	
 								<select class="hd_prov3" name="Province" >
@@ -232,6 +233,9 @@
 								<select class="hd_dist3" >
 									
 								</select>
+								<p class="hd_label_greetingcard" style="font-weight:bold; margin-top:30px; font-size:14pt;">Greeting Cards</p>
+								<input class="hd_to" name="hd_to" type="text" placeholder="Name of recipient.."  />
+								<textarea class="hd_message" name="hd_message" placeholder="Message for recipient.." style="font-size:11pt; min-height:120px" ></textarea>
 							</div>
 							
 						</div>
@@ -345,6 +349,9 @@ if(localStorage.hd_lang==="IDN"){
 	$("select[name='address'] option:first-child").html("-- Pilih Alamat --");
 	$("select[name='address'] option[value='home']").html("Alamatku");
 	$("select[name='address'] option[value='work']").html("Alamat baru...");
+	$(".hd_to").attr("placeholder","Nama penerima...")
+	$(".hd_message").attr("placeholder","Pesan untuk penerima...")
+	$(".hd_label_greetingcard").attr("placeholder","Kartu Ucapan")
 	$("select.hd_prov1 option").html("-- Pilih Provinsi --");
 	$("select.hd_prov3 option").html("-- Pilih Provinsi --");
 	$(".continue").html("Lanjutkan ke Pembayaran");
@@ -391,8 +398,8 @@ $(document).ready(function() {
 	 }
 
 
-	 var getprov = "http://haagendazs.echoscript.net/api/province?session_key="+ sess_key +"&search_region_id="+ hd_region_id +"&delivery_available=1";
-	 var calculate_order = "http://haagendazs.echoscript.net/api/calculate_order?session_key="+ sess_key +"";
+	 var getprov = "http://sandboxapi.haagendazsindonesia.co.id/v1/province?session_key="+ sess_key +"&search_region_id="+ hd_region_id +"&delivery_available=1";
+	 var calculate_order = "http://sandboxapi.haagendazsindonesia.co.id/v1/calculate_order?session_key="+ sess_key +"";
 	 var selectprov3 = $("select.hd_prov3");
 	 var selectcity3 = $("select.hd_city3");
 	 var selectdist3 = $("select.hd_dist3");
@@ -447,7 +454,7 @@ $(document).ready(function() {
 		var rep_avatar;
 		var rep_username;
 		$(".hd_suggestion").html("")
-      	var search_user = "http://haagendazs.echoscript.net/api/customer?session_key="+ sess_key +"&q="+ isian +"";
+      	var search_user = "http://sandboxapi.haagendazsindonesia.co.id/v1/customer?session_key="+ sess_key +"&q="+ isian +"";
 		 $.getJSON(search_user,function(alluser){
 		 	$(".hd_suggestion").show();
 		 	for (var i = 0, len = alluser.payload.length; i < len; i++) {
@@ -587,7 +594,7 @@ $(document).ready(function() {
 		 	selectcity1.css("background","url(img/loading.gif) center center no-repeat");
 		 	selectcity1.css("background-size","contain");
 		 	
-		 	var getcity = "http://haagendazs.echoscript.net/api/city?session_key="+ sess_key +"&search_province_id="+ $(this).val()+"";
+		 	var getcity = "http://sandboxapi.haagendazsindonesia.co.id/v1/city?session_key="+ sess_key +"&search_province_id="+ $(this).val()+"";
 		 	$.getJSON(getcity,function(kota){
 		 		if(localStorage.hd_lang==="IDN"){
 		 			selectcity1.append("<option value=''>-- Pilih Kota --</option>");
@@ -624,7 +631,7 @@ $(document).ready(function() {
 		 	selectdist1.css("background-size","contain");
 		 	selectstore1.hide();
 		 	
-		 	var getdist = "http://haagendazs.echoscript.net/api/sub_district?session_key="+ sess_key +"&search_city_id="+ $(this).val()+"";
+		 	var getdist = "http://sandboxapi.haagendazsindonesia.co.id/v1/sub_district?session_key="+ sess_key +"&search_city_id="+ $(this).val()+"";
 		 	$.getJSON(getdist,function(kecamatan){
 				//console.log(kecamatan.payload[32].sub_district_name);
 				selectdist1.css("background","none");
@@ -658,7 +665,7 @@ $(document).ready(function() {
 		 	selectstore1.html("Choose Store");
 		 	selectstore1.css("background","url(img/loading.gif) center center no-repeat");
 		 	selectstore1.css("background-size","contain");
-		 	var getdist = "http://haagendazs.echoscript.net/api/store?session_key="+ sess_key +"&search_sub_district_id="+ $(this).val()+"";
+		 	var getdist = "http://sandboxapi.haagendazsindonesia.co.id/v1/store?session_key="+ sess_key +"&search_sub_district_id="+ $(this).val()+"";
 		 	$.getJSON(getdist,function(kecamatan){
 				//console.log(kecamatan.payload[32].sub_district_name);
 				
@@ -724,7 +731,7 @@ $(document).ready(function() {
 		 	selectcity2.css("background","url(img/loading.gif) center center no-repeat");
 		 	selectcity2.css("background-size","contain");
 		 	
-		 	var getcity = "http://haagendazs.echoscript.net/api/city?session_key="+ sess_key +"&search_province_id="+ $(this).val()+"";
+		 	var getcity = "http://sandboxapi.haagendazsindonesia.co.id/v1/city?session_key="+ sess_key +"&search_province_id="+ $(this).val()+"";
 		 	$.getJSON(getcity,function(kota){
 				//console.log(kota.payload[32].city_name);
 				if(localStorage.hd_lang==="IDN"){
@@ -761,7 +768,7 @@ $(document).ready(function() {
 		 	selectdist2.html("Choose District");
 		 	selectdist2.css("background","url(img/loading.gif) center center no-repeat");
 		 	selectdist2.css("background-size","contain");
-		 	var getdist = "http://haagendazs.echoscript.net/api/sub_district?session_key="+ sess_key +"&search_city_id="+ $(this).val()+"";
+		 	var getdist = "http://sandboxapi.haagendazsindonesia.co.id/v1/sub_district?session_key="+ sess_key +"&search_city_id="+ $(this).val()+"";
 		 	$.getJSON(getdist,function(kecamatan){
 		 		$("input[name='savename']").css("margin-bottom","63px");
 				//console.log(kecamatan.payload[32].sub_district_name);
@@ -835,7 +842,7 @@ $(document).ready(function() {
 		 	selectcity3.css("background","url(img/loading.gif) center center no-repeat");
 		 	selectcity3.css("background-size","contain");
 		 	
-		 	var getcity = "http://haagendazs.echoscript.net/api/city?session_key="+ sess_key +"&search_province_id="+ $(this).val()+"&delivery_available=1";
+		 	var getcity = "http://sandboxapi.haagendazsindonesia.co.id/v1/city?session_key="+ sess_key +"&search_province_id="+ $(this).val()+"&delivery_available=1";
 		 	$.getJSON(getcity,function(kota){
 				//console.log(kota.payload[32].city_name);
 				if(localStorage.hd_lang==="IDN"){
@@ -872,7 +879,7 @@ $(document).ready(function() {
 		 	selectdist3.html("Choose District");
 		 	selectdist3.css("background","url(img/loading.gif) center center no-repeat");
 		 	selectdist3.css("background-size","contain");
-		 	var getdist = "http://haagendazs.echoscript.net/api/sub_district?session_key="+ sess_key +"&search_city_id="+ $(this).val()+"&delivery_available=1";
+		 	var getdist = "http://sandboxapi.haagendazsindonesia.co.id/v1/sub_district?session_key="+ sess_key +"&search_city_id="+ $(this).val()+"&delivery_available=1";
 		 	$.getJSON(getdist,function(kecamatan){
 		 		$("input[name='savename']").css("margin-bottom","63px");
 				//console.log(kecamatan.payload[32].sub_district_name);
@@ -944,6 +951,9 @@ $(document).ready(function() {
 
 	
 	 $(".continue").on('click', function() {
+		$(".btnfix .continue").css("opacity","0.3");
+	 	$(".btnfix .continue").attr("disabled",true);
+		$(".loading").fadeIn("show");
 		if(localStorage.hd_areaprice ==="java"){
 	 		var region_id = "1"
 	 	}else{
@@ -963,10 +973,12 @@ $(document).ready(function() {
 				var consignee_name = $("input[name='hd_name3']").val();
 				var consignee_address = $("input[name='hd_address3']").val();
 				var consignee_phone = $("input[name='hd_phone3']").val();
-				var sub_district_id = $(".hd_dist3").val();				
+				var sub_district_id = $(".hd_dist3").val();	
+				var greeting_to = $(".hd_to").val();
+				var greeting_message = $(".hd_message").val();
 			}
 			
-			var consignee_phone = localStorage.hd_contact;
+			//var consignee_phone = localStorage.hd_contact;
 			var param = {
 				order_detail : order_detail,
 				gift_customer_id : gift_customer_id,
@@ -974,11 +986,13 @@ $(document).ready(function() {
 				consignee_name : consignee_name,
 				consignee_address : consignee_address,
 				consignee_phone : consignee_phone,
+				greeting_to : greeting_to,
+				greeting_message : greeting_message,
 				region_id : region_id,
 				delivery_method : "DELIVERY"
 			}
 
-			var postorder = "http://haagendazs.echoscript.net/api/order?session_key="+ sess_key +"";
+			var postorder = "http://sandboxapi.haagendazsindonesia.co.id/v1/order?session_key="+ sess_key +"";
 
 		    $.post(postorder, param)
 		        .done(function(data){
@@ -993,7 +1007,7 @@ $(document).ready(function() {
 				   			$("#success .modal-body p").html('Order has been sent!');
 				   		}
 				   		
-				   		setTimeout('window.location.href = "creditcard.html?id='+ orderan.payload.order_id+'"',300);
+				   		//setTimeout('window.location.href = "creditcard.html?id='+ orderan.payload.order_id+'"',300);
 					   	localStorage.current_order_id = orderan.payload.order_id;
 				   		localStorage.products = "";
 				   		localStorage.hd_kirim_on = 0;
@@ -1003,7 +1017,10 @@ $(document).ready(function() {
 				   		localStorage.hd_order_total="";
 				   		localStorage.hd_payment="";*/
 				   	}else{
-				   		$("#error").modal("show");
+				   		$(".btnfix .continue").css("opacity","1");
+						$(".btnfix .continue").attr("disabled",false);
+						$(".loading").fadeOut();
+						$("#error").modal("show");
 				   		//alert("order tidak terkirim");
 				   		if(localStorage.hd_lang==="IDN"){
 				   			$("#error .modal-body p").html('Pesanan tidak terkirim!');	
@@ -1030,7 +1047,7 @@ $(document).ready(function() {
 				consignee_phone : consignee_phone,
 				delivery_method : delivery_method
 			 }
-			 var postorder = "http://haagendazs.echoscript.net/api/order?session_key="+ sess_key +"";
+			 var postorder = "http://sandboxapi.haagendazsindonesia.co.id/v1/order?session_key="+ sess_key +"";
 
 		    $.post(postorder, param)
 		        .done(function(data){
@@ -1053,6 +1070,9 @@ $(document).ready(function() {
 				   		localStorage.hd_order_total="";
 				   		localStorage.hd_payment="";*/
 				   	}else{
+						$(".btnfix .continue").css("opacity","1");
+						$(".btnfix .continue").attr("disabled",false);
+						$(".loading").fadeOut();
 				   		$("#error").modal("show");
 				   		if(localStorage.hd_lang=="IDN"){
 				   			$("#error .modal-body p").html('Pesanan tidak terkirim!');	
@@ -1085,7 +1105,7 @@ $(document).ready(function() {
 				delivery_method : delivery_method,
 				region_id : region_id
 			 }
-			 var postorder = "http://haagendazs.echoscript.net/api/order?session_key="+ sess_key +"";
+			 var postorder = "http://sandboxapi.haagendazsindonesia.co.id/v1/order?session_key="+ sess_key +"";
 
 		    $.post(postorder, param)
 		        .done(function(data){
@@ -1109,6 +1129,9 @@ $(document).ready(function() {
 				   		localStorage.hd_order_total="";
 				   		localStorage.hd_payment="";*/
 				   	}else{
+						$(".btnfix .continue").css("opacity","1");
+						$(".btnfix .continue").attr("disabled",false);
+						$(".loading").fadeOut();
 				   		$("#error").modal("show");
 				   		if(localStorage.hd_lang=="IDN"){
 				   			$("#error .modal-body p").html('Pesanan tidak terkirim!');	

@@ -86,7 +86,7 @@
 			<div class="container">
 				<div class="row" style="text-align: justify;">
 					<div class="col-xs-12 no-padding hd-passage">
-						<iframe src="http://haagendazs.echoscript.net/api/static_page/help"></iframe>
+						<iframe src="http://sandboxapi.haagendazsindonesia.co.id/v1/static_page/help"></iframe>
 					</div>	
 				</div>
 			</div>
@@ -115,7 +115,7 @@ $(".nav").hide();
 
 $(document).ready(function(){
 
-	var get_tnc = "http://haagendazs.echoscript.net/api/static/help"
+	var get_tnc = "http://sandboxapi.haagendazsindonesia.co.id/v1/static/help"
 	
 	$.getJSON(get_tnc,function(passage){
 		if(passage.is_error==false || passage.is_error=="false"){

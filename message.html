@@ -109,7 +109,7 @@ $(document).ready(function(){
 	localStorage.inbox_back="xxxx";
 	var sess_key = localStorage.hd_session_key;	
 	var getID = getUrlParameter('id');
-	var urlw = "http://haagendazs.echoscript.net/api/notification?session_key="+ sess_key +"&id="+ getID +"";
+	var urlw = "http://sandboxapi.haagendazsindonesia.co.id/v1/notification?session_key="+ sess_key +"&id="+ getID +"";
  	
  	var berita = $(".inboxarea").find(".row");
   	
@@ -119,7 +119,7 @@ $(document).ready(function(){
   		var param = {
 			id : id
 		}
-		var postorder = "http://haagendazs.echoscript.net/api/notification?session_key="+ sess_key +"";
+		var postorder = "http://sandboxapi.haagendazsindonesia.co.id/v1/notification?session_key="+ sess_key +"";
 
 	    $.post(postorder, param)
 	        .done(function(data){

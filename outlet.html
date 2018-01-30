@@ -100,7 +100,7 @@ $(".nav").hide();
 
 $(document).ready(function(){
 	  var sess_key = localStorage.hd_session_key;
-	  var urlx = "http://haagendazs.echoscript.net/api/store?session_key="+  sess_key +"";
+	  var urlx = "http://sandboxapi.haagendazsindonesia.co.id/v1/store?session_key="+  sess_key +"";
 	  var fondues = $(".shoppage").find(".row");
 	  
 	  $.getJSON(urlx,function(menu){

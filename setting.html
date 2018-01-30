@@ -359,7 +359,7 @@ $(document).ready(function(){
 	var sess_key = localStorage.hd_session_key;
 	var cust_id = localStorage.login_hd_id;
 
-	var urlx = "http://haagendazs.echoscript.net/api/customer?session_key="+ sess_key +"&customer_id="+ cust_id +"";
+	var urlx = "http://sandboxapi.haagendazsindonesia.co.id/v1/customer?session_key="+ sess_key +"&customer_id="+ cust_id +"";
 	$.getJSON(urlx,function(data){
 		$(".sect-1").find("input[name='full_name']").val(data.payload[0].full_name);
 		$(".sect-1").find("input[name='username']").val(data.payload[0].username);
@@ -412,7 +412,7 @@ $(document).ready(function(){
 		}else{
 			
 			selectcity3.show();
-		 	var getcity = "http://haagendazs.echoscript.net/api/city?session_key="+ sess_key +"&search_province_id="+ data.payload[0].province_id +"";
+		 	var getcity = "http://sandboxapi.haagendazsindonesia.co.id/v1/city?session_key="+ sess_key +"&search_province_id="+ data.payload[0].province_id +"";
 		 	$.getJSON(getcity,function(kota){
 				//console.log(kota.payload[32].city_name);
 				if(localStorage.hd_lang==="IDN"){
@@ -447,7 +447,7 @@ $(document).ready(function(){
 			
 
 			selectdist3.show();
-		 	var getdist = "http://haagendazs.echoscript.net/api/sub_district?session_key="+ sess_key +"&search_city_id="+ data.payload[0].city_id +"";
+		 	var getdist = "http://sandboxapi.haagendazsindonesia.co.id/v1/sub_district?session_key="+ sess_key +"&search_city_id="+ data.payload[0].city_id +"";
 		 	$.getJSON(getdist,function(kecamatan){
 		 		//$("input[name='savename']").css("margin-bottom","63px");
 				//console.log(kecamatan.payload[32].sub_district_name);
@@ -502,8 +502,8 @@ $(document).ready(function(){
 			$(this).prev("input[name='password']").attr("type","password");*/
 	});
 
-	var ulz = "http://haagendazs.echoscript.net/api/customer?session_key="+ sess_key +"";
-	var urx = "http://haagendazs.echoscript.net/api/password?session_key="+ sess_key +"";
+	var ulz = "http://sandboxapi.haagendazsindonesia.co.id/v1/customer?session_key="+ sess_key +"";
+	var urx = "http://sandboxapi.haagendazsindonesia.co.id/v1/password?session_key="+ sess_key +"";
 	//SAVE PASSWORD
 	$("#chgpassw .modal-footer .savepass").click(function(){
 		$("#chgpassw").modal("hide");
@@ -542,6 +542,8 @@ $(document).ready(function(){
 	
 	//SAVE SETTING
 	$(".savenow button").click(function(){
+		$(".savenow button").attr("disabled","true");
+		$(".savenow button").css("opacity","0.3");
 		var full_name = $(".sect-1").find("input[name='full_name']").val();
 		var username = $(".sect-1").find("input[name='username']").val();
 		var default_address = $(".sect-2").find("input[name='hd_address3']").val();
@@ -551,7 +553,7 @@ $(document).ready(function(){
 		var sub_district_id = $("select.hd_dist3").val();
 		var province_id = $("select.hd_prov3").val();
 		var city_id = $("select.hd_city3").val();
-
+		
 		if(province_id===null || city_id===null || sub_district_id===null || province_id==="" || city_id==="" || sub_district_id===""){
 
 			var param = {
@@ -582,8 +584,7 @@ $(document).ready(function(){
 	        	if(!data.is_error){
 			   		//alert("Your Profile has been updated.");
 			   		$("#success").modal("show");
-			   		$(".savenow button").attr("disabled","true");
-			   		$(".savenow button").css("opacity","0.3");
+			   		
 			   		location.reload();
 			   		//setTimeout('window.location.href = "thanks.html"; ',300);
 			   		//localStorage.products = "";
@@ -594,6 +595,8 @@ $(document).ready(function(){
 			   		localStorage.hd_payment="";*/
 			   	}else{
 			   		$("#error").modal("show");
+					$(".savenow button").attr("disabled",false);
+			   		$(".savenow button").css("opacity","1");
 			   	}
 		   	});   
 	      	return false;
@@ -601,12 +604,13 @@ $(document).ready(function(){
 	});
 	
 	
-		if(localStorage.hd_lang==="ENG" || localStorage.hd_lang != undefined || localStorage.hd_lang != ""){
+		if(localStorage.hd_lang==="ENG" || localStorage.hd_lang == undefined || localStorage.hd_lang == ""){
 			$(".idn img").css("filter","grayscale(100%)");
 			$(".idn img").css("-webkit-filter","grayscale(100%)");
 			$(".eng img").css("filter","none");
 			$(".eng img").css("-webkit-filter","none");
 			$(".chgbhs strong").html("English");
+			localStorage.hd_lang="ENG"
 		}else{
 			$(".eng img").css("filter","grayscale(100%)");
 			$(".eng img").css("-webkit-filter","grayscale(100%)");
@@ -898,7 +902,7 @@ $(document).ready(function(){
 </script>
 <script type="text/javascript">
  var sess_key = localStorage.hd_session_key;
- var getprov = "http://haagendazs.echoscript.net/api/province?session_key="+ sess_key +"";
+ var getprov = "http://sandboxapi.haagendazsindonesia.co.id/v1/province?session_key="+ sess_key +"";
  var selectprov3 = $("select.hd_prov3");
  var selectcity3 = $("select.hd_city3");
  var selectdist3 = $("select.hd_dist3");
@@ -923,7 +927,7 @@ $(document).ready(function(){
 		 	selectcity3.css("background","url(img/loading.gif) center center no-repeat");
 		 	selectcity3.css("background-size","contain");
 		 	
-		 	var getcity = "http://haagendazs.echoscript.net/api/city?session_key="+ sess_key +"&search_province_id="+ $(this).val()+"";
+		 	var getcity = "http://sandboxapi.haagendazsindonesia.co.id/v1/city?session_key="+ sess_key +"&search_province_id="+ $(this).val()+"";
 		 	$.getJSON(getcity,function(kota){
 				//console.log(kota.payload[32].city_name);
 				if(localStorage.hd_lang==="IDN"){
@@ -962,7 +966,7 @@ $(document).ready(function(){
 	 	selectdist3.html("Choose District");
 	 	selectdist3.css("background","url(img/loading.gif) center center no-repeat");
 	 	selectdist3.css("background-size","contain");
-	 	var getdist = "http://haagendazs.echoscript.net/api/sub_district?session_key="+ sess_key +"&search_city_id="+ $(this).val()+"";
+	 	var getdist = "http://sandboxapi.haagendazsindonesia.co.id/v1/sub_district?session_key="+ sess_key +"&search_city_id="+ $(this).val()+"";
 	 	$.getJSON(getdist,function(kecamatan){
 	 		$("input[name='savename']").css("margin-bottom","63px");
 			//console.log(kecamatan.payload[32].sub_district_name);

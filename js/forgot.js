@@ -35,7 +35,7 @@ $(document).ready(function()
 				
 			type : 'POST',
 			//url  : 'engine/login_process.php',
-			url  : 'http://haagendazs.echoscript.net/api/auth/forgot_password',
+			url  : 'http://sandboxapi.haagendazsindonesia.co.id/v1/auth/forgot_password',
 			//crossDomain: true,
 			//headers: {
              // 'Access-Control-Allow-Origin': '*'

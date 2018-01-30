@@ -233,11 +233,11 @@
 								<select class="hd_dist3" >
 									
 								</select>
-								<p class="hd_label_greetingcard" style="font-weight:bold; margin-top:30px; font-size:14pt;">Greeting Cards</p>
-								<input class="hd_to" name="hd_to" type="text" placeholder="Name of recipient.."  />
-								<textarea class="hd_message" name="hd_message" placeholder="Message for recipient.." style="font-size:11pt; min-height:120px" ></textarea>
+								
 							</div>
-							
+							<p class="hd_label_greetingcard" style="font-weight:bold; margin-top:30px; font-size:14pt;">Greeting Cards</p>
+							<input class="hd_to" name="hd_to" type="text" placeholder="Name of recipient.."  />
+							<textarea class="hd_message" name="hd_message" placeholder="Message for recipient.." style="font-size:11pt; min-height:120px" ></textarea>
 						</div>
 						<div class="col-xs-12 no-padding table_inv">
 							<div class="col-xs-12 no-padding invoice" style="margin-top: 20px;">
@@ -1007,7 +1007,7 @@ $(document).ready(function() {
 				   			$("#success .modal-body p").html('Order has been sent!');
 				   		}
 				   		
-				   		//setTimeout('window.location.href = "creditcard.html?id='+ orderan.payload.order_id+'"',300);
+				   		setTimeout('window.location.href = "creditcard.html?id='+ orderan.payload.order_id+'"',300);
 					   	localStorage.current_order_id = orderan.payload.order_id;
 				   		localStorage.products = "";
 				   		localStorage.hd_kirim_on = 0;

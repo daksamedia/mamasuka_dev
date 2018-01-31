@@ -213,14 +213,17 @@
 								<option value="home">My Address</option>
 								<option value="work">Input Address...</option>
 							</select>
-							<div class="col-xs-12 hd_myaddress">
+							<div class="col-xs-12 hd_myaddress" style="margin-bottom:30px;">
 								<!--<p>
 									<strong>Attention!</strong><br>
 									Please check your address.<br />
 								 	If it's not set properly, we will call you.
 								</p>-->
+								<p class="hd_label_greetingcard" style="font-weight:bold; margin-top:30px !important; font-size:14pt;">Greeting Cards</p>
+								<input class="hd_to" name="hd_to" type="text" style="background:white" placeholder="Name of recipient.."  />
+								<textarea class="hd_message" name="hd_message" placeholder="Message for recipient.." style="background:white; font-size:11pt; min-height:220px; margin-bottom:30px;" ></textarea>
 							</div>
-							<div class="col-xs-12 no-padding hd_newaddress">
+							<div class="col-xs-12 no-padding hd_newaddress" >
 								<input name="hd_name3" type="text" style="width:100%; border: #e4e4e4 1px solid; padding:4px; padding:4px; background:none; margin-bottom:15px; margin-top:15px;" placeholder="Name of recipient.."  />
 								<input name="hd_phone3" type="text" style="width:100%; border: #e4e4e4 1px solid; padding:4px; padding:4px; background:none; margin-bottom:15px; margin-top:15px;" placeholder="Recipient phone number..."  />
 								<input name="hd_address3" type="text" style="width:100%; border: #e4e4e4 1px solid; padding:4px; padding:4px; background:none; margin-bottom:15px; margin-top:15px;" placeholder="Input Address..."  />	
@@ -233,11 +236,11 @@
 								<select class="hd_dist3" >
 									
 								</select>
-								
+								<p class="hd_label_greetingcard" style="font-weight:bold; margin-top:30px !important; font-size:14pt;">Greeting Cards</p>
+								<input class="hd_to" name="hd_to" type="text" placeholder="Name of recipient.."  />
+								<textarea class="hd_message" name="hd_message" placeholder="Message for recipient.." style="font-size:11pt; min-height:120px" ></textarea>
 							</div>
-							<p class="hd_label_greetingcard" style="font-weight:bold; margin-top:30px; font-size:14pt;">Greeting Cards</p>
-							<input class="hd_to" name="hd_to" type="text" placeholder="Name of recipient.."  />
-							<textarea class="hd_message" name="hd_message" placeholder="Message for recipient.." style="font-size:11pt; min-height:120px" ></textarea>
+							
 						</div>
 						<div class="col-xs-12 no-padding table_inv">
 							<div class="col-xs-12 no-padding invoice" style="margin-top: 20px;">
@@ -430,17 +433,17 @@ $(document).ready(function() {
 	 if(localStorage.hd_address==="null" || localStorage.hd_address===null || localStorage.hd_address==="" || localStorage.hd_address===undefined){
 	 	//alert("Your address does not set yet");
 	 	if(localStorage.hd_lang==="IDN"){
-	 		$(".hd_myaddress").append("Alamat tidak tersedia<br><p style='margin-top:20px;'>Tambahkan alamat <a style='color:#810D24; font-weight:bold' href='setting.html'>di sini</a></p>");
+	 		$(".hd_myaddress").prepend("Alamat tidak tersedia<br><p style='margin-top:20px;'>Tambahkan alamat <a style='color:#810D24; font-weight:bold' href='setting.html'>di sini</a></p>");
 	 	}else{
-	 		$(".hd_myaddress").append("Address is not available<br><p style='margin-top:20px;'>Add your address <a style='color:#810D24; font-weight:bold' href='setting.html'>here</a></p>");
+	 		$(".hd_myaddress").prepend("Address is not available<br><p style='margin-top:20px;'>Add your address <a style='color:#810D24; font-weight:bold' href='setting.html'>here</a></p>");
 	 	}
 	 }else{
 	 	if(localStorage.hd_lang==="IDN"){
-		 	$(".hd_myaddress").append("<strong>Alamatku : </strong><br>"+localStorage.hd_address);
-		 	$(".hd_myaddress").append("<p style='margin-top:20px;'>Bukan ini? <a style='color:#810D24; font-weight:bold' href='setting.html'>sunting di sini</a></p>")
+		 	$(".hd_myaddress").prepend("<strong>Alamatku : </strong><br>"+localStorage.hd_address);
+		 	$(".hd_myaddress").prepend("<p style='margin-top:20px;'>Bukan ini? <a style='color:#810D24; font-weight:bold' href='setting.html'>sunting di sini</a></p>")
 		}else{
-			$(".hd_myaddress").append("<strong>My address : </strong><br>"+localStorage.hd_address);
-		 	$(".hd_myaddress").append("<p style='margin-top:20px;'>Not this one? <a style='color:#810D24; font-weight:bold' href='setting.html'>edit here</a></p>")
+			$(".hd_myaddress").prepend("<strong>My address : </strong><br>"+localStorage.hd_address);
+		 	$(".hd_myaddress").prepend("<p style='margin-top:20px;'>Not this one? <a style='color:#810D24; font-weight:bold' href='setting.html'>edit here</a></p>")
 		}
 	 }
 	 
@@ -558,6 +561,8 @@ $(document).ready(function() {
 	 $(".hd_newaddress").hide();
 	 $("select[name='address']").change(function(){
 	 	if($(this).val()!=""){
+			$(".hd_to").val("")
+			$(".hd_message").val("")
 		 	if($(this).val()=="home"){
 		 		$(".hd_myaddress").show();
 		 		$(".hd_newaddress").hide();
@@ -568,7 +573,8 @@ $(document).ready(function() {
 		 			$(".btnfix .continue").css("opacity","0.3");
 	 				$(".btnfix .continue").attr("disabled",true);
 		 		}
-
+				
+				
 		 	}else{
 		 		$(".hd_myaddress").hide();
 		 		$(".hd_newaddress").show();

@@ -428,6 +428,7 @@ $(document).ready(function() {
 	 //$(".btnfix .continue").css("opacity","1");
 	 //$(".btnfix .continue").attr("disabled",false);
 	 var semua_user;
+	 var get_prov = 0;
 	 
 	 //DISPLAY MY ADDRESS
 	 if(localStorage.hd_address==="null" || localStorage.hd_address===null || localStorage.hd_address==="" || localStorage.hd_address===undefined){
@@ -520,27 +521,31 @@ $(document).ready(function() {
     })
 
 
+	 function get_province(){
+		$.getJSON(getprov,function(provinsi){
+			//console.log(provinsi.payload[2].province_name);
+			$("input[name='hd_address3']").geocomplete({country: "ID", type: ['(regions)']});
+			get_prov = 1;
+			for (var i = 0, len = provinsi.payload.length; i < len; i++) {
+				selectprov3.append(
+					"<option value='"+ provinsi.payload[i].province_id +"'>"+
+						provinsi.payload[i].province_name+
+					"</option>"
+				)
+			   /* selectprov2.append(
+					"<option value='"+ provinsi.payload[i].province_id +"'>"+
+						provinsi.payload[i].province_name+
+					"</option>"
+				) */
 
-	 $.getJSON(getprov,function(provinsi){
-		//console.log(provinsi.payload[2].province_name);
-		$("input[name='hd_address3']").geocomplete({country: "ID", type: ['(regions)']});
-      	
-		for (var i = 0, len = provinsi.payload.length; i < len; i++) {
-	        selectprov3.append(
-				"<option value='"+ provinsi.payload[i].province_id +"'>"+
-					provinsi.payload[i].province_name+
-				"</option>"
-			)
-	       /* selectprov2.append(
-				"<option value='"+ provinsi.payload[i].province_id +"'>"+
-					provinsi.payload[i].province_name+
-				"</option>"
-			) */
+			}
 
-	    }
-
-	  
-	 });
+		  
+		 });
+	 }
+	 
+	 
+	 get_province()
 
 	 $.getJSON(getprov,function(provinsi){
 		//console.log(provinsi.payload[2].province_name);
@@ -576,6 +581,9 @@ $(document).ready(function() {
 				
 				
 		 	}else{
+				if(get_prov==0){
+					get_province();
+				}
 		 		$(".hd_myaddress").hide();
 		 		$(".hd_newaddress").show();
 		 		$(".btnfix .continue").css("opacity","0.3");
@@ -999,7 +1007,7 @@ $(document).ready(function() {
 			}
 
 			var postorder = "http://sandboxapi.haagendazsindonesia.co.id/v1/order?session_key="+ sess_key +"";
-
+			
 		    $.post(postorder, param)
 		        .done(function(data){
 		        	var orderan = jQuery.parseJSON(data)

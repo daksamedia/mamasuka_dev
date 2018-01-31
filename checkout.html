@@ -977,19 +977,21 @@ $(document).ready(function() {
 		 	var order_detail = localStorage.hd_order_detail;
 			var gift_customer_id = "";			
 			var delivery_method = "DELIVERY";
-
+			var greeting_to = $(".hd_to").val();
+			var greeting_message = $(".hd_message").val();
+			
 			if($("select[name='address']").val()=="home"){
 				var consignee_name = localStorage.hd_name;
 				var sub_district_id = localStorage.hd_subdist;
 				var consignee_address = localStorage.hd_address;
 				var consignee_phone = localStorage.hd_contact;
+				
 			}else{
 				var consignee_name = $("input[name='hd_name3']").val();
 				var consignee_address = $("input[name='hd_address3']").val();
 				var consignee_phone = $("input[name='hd_phone3']").val();
 				var sub_district_id = $(".hd_dist3").val();	
-				var greeting_to = $(".hd_to").val();
-				var greeting_message = $(".hd_message").val();
+				
 			}
 			
 			//var consignee_phone = localStorage.hd_contact;
